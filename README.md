@@ -1,73 +1,210 @@
-# Welcome to your Lovable project
+# AnimaLab - AI-Powered Design-to-Code Platform
 
-## Project info
+A modern, test-driven platform that transforms design concepts into production-ready React components using AI. Built with a mock-first architecture for seamless development and testing.
 
-**URL**: https://lovable.dev/projects/99206295-a6e3-48c6-bf23-237aa2fa737b
+## 🚀 Features
 
-## How can I edit this code?
+- **AI-Powered Code Generation**: Transform design descriptions into clean, responsive React components
+- **Real-time Playground**: Interactive environment for testing and iterating on generated code
+- **Mock-First Architecture**: Comprehensive mocking system for all services and APIs
+- **Comprehensive Testing**: Unit, integration, and E2E tests for all components
+- **Modern Tech Stack**: React, TypeScript, Tailwind CSS, Vite, and Vitest
+- **Beautiful Design System**: Custom design tokens and component variants
 
-There are several ways of editing your application.
+## 🛠️ Tech Stack
 
-**Use Lovable**
+- **Frontend**: React 18, TypeScript, Tailwind CSS
+- **Build Tool**: Vite
+- **Testing**: Vitest, Testing Library, Jest DOM
+- **Routing**: React Router DOM
+- **UI Components**: Radix UI (shadcn/ui)
+- **Styling**: Tailwind CSS with custom design system
+- **State Management**: React hooks and Context API
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/99206295-a6e3-48c6-bf23-237aa2fa737b) and start prompting.
+## 📦 Project Structure
 
-Changes made via Lovable will be committed automatically to this repo.
+```
+src/
+├── components/           # Reusable UI components
+│   ├── ui/              # Base UI components (shadcn/ui)
+│   ├── layout/          # Layout components (Header, Footer)
+│   ├── landing/         # Landing page components
+│   └── playground/      # Playground-specific components
+├── pages/               # Route components
+├── services/            # Business logic and API services
+├── mocks/              # Mock data and responses
+├── tests/              # Test files
+│   ├── components/     # Component tests
+│   ├── services/       # Service tests
+│   └── mocks/          # Mock tests
+├── hooks/              # Custom React hooks
+└── lib/                # Utility functions
+```
 
-**Use your preferred IDE**
+## 🚀 Getting Started
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Prerequisites
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+- Node.js (v18 or higher)
+- npm or yarn
 
-Follow these steps:
+### Installation
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd anima-clone-lab
+```
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+2. Install dependencies:
+```bash
+npm install
+```
 
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+3. Start the development server:
+```bash
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+4. Open your browser and navigate to `http://localhost:8080`
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## 🧪 Testing
 
-**Use GitHub Codespaces**
+### Running Tests
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+```bash
+# Run all tests
+npm run test
 
-## What technologies are used for this project?
+# Run tests in watch mode
+npm run test:watch
 
-This project is built with:
+# Run tests with coverage
+npm run test:coverage
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+# Run specific test file
+npm run test Header.test.tsx
+```
 
-## How can I deploy this project?
+### Test Structure
 
-Simply open [Lovable](https://lovable.dev/projects/99206295-a6e3-48c6-bf23-237aa2fa737b) and click on Share -> Publish.
+- **Unit Tests**: Individual component and service testing
+- **Integration Tests**: Component interaction testing  
+- **Mock Tests**: Validation of mock services and data
+- **E2E Tests**: Full user workflow testing (planned)
 
-## Can I connect a custom domain to my Lovable project?
+### Writing Tests
 
-Yes, you can!
+All tests should follow these patterns:
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+```typescript
+// Component tests
+describe('ComponentName', () => {
+  it('renders correctly', () => {
+    render(<ComponentName />);
+    expect(screen.getByText('Expected Text')).toBeInTheDocument();
+  });
+});
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+// Service tests  
+describe('ServiceName', () => {
+  it('performs expected operation', async () => {
+    const result = await service.method();
+    expect(result).toEqual(expectedResult);
+  });
+});
+```
+
+## 🎨 Design System
+
+The project uses a comprehensive design system built with Tailwind CSS:
+
+- **Colors**: Semantic color tokens for consistent theming
+- **Gradients**: Pre-defined gradient combinations
+- **Typography**: Consistent font scales and weights
+- **Spacing**: Standardized spacing system
+- **Components**: Custom variants for all UI components
+
+### Using Design Tokens
+
+```tsx
+// ✅ Correct - Using design system tokens
+<Button variant="hero" className="bg-gradient-primary">
+
+// ❌ Incorrect - Direct color usage
+<Button className="bg-blue-500 text-white">
+```
+
+## 📝 Development Workflow
+
+### Adding New Features
+
+1. **Plan**: Define requirements and update TODO.md
+2. **Mock**: Create mock data/services first
+3. **Test**: Write tests before implementation
+4. **Implement**: Build the feature using design system
+5. **Verify**: Ensure all tests pass
+6. **Document**: Update README and code comments
+
+### Code Standards
+
+- Use TypeScript for all new code
+- Follow React best practices and hooks patterns
+- Implement comprehensive error handling
+- Write meaningful test cases
+- Use semantic HTML and accessibility features
+- Follow the established design system
+
+## 🔧 Available Scripts
+
+```bash
+npm run dev          # Start development server
+npm run build        # Build for production  
+npm run preview      # Preview production build
+npm run test         # Run test suite
+npm run test:watch   # Run tests in watch mode
+npm run lint         # Run ESLint
+npm run type-check   # Run TypeScript checks
+```
+
+## 🎯 Key Components
+
+### Landing Page
+- **Header**: Navigation and branding
+- **Hero**: Main value proposition and CTA
+- **Features**: Platform capabilities showcase
+
+### Playground
+- **Input Panel**: AI prompt interface
+- **Output Panel**: Generated code and preview
+- **Code Preview**: Syntax-highlighted code display
+- **Component Preview**: Live component rendering
+
+### Services
+- **CodeGenerationService**: Mock AI code generation
+- **API Mocks**: Simulated backend responses
+
+## 🚧 Roadmap
+
+See [TODO.md](./TODO.md) for detailed development progress and upcoming features.
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Write tests for new functionality
+4. Implement the feature
+5. Ensure all tests pass
+6. Submit a pull request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 🆘 Support
+
+For questions and support:
+- Check the documentation in `/docs`
+- Review existing issues and tests
+- Create a new issue with detailed description
+- Follow the established patterns and conventions
