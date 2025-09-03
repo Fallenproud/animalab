@@ -10,7 +10,8 @@ import {
   Bot,
   Clock,
   Settings,
-  Minimize2 
+  Minimize2,
+  ChevronDown
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -49,7 +50,6 @@ export function AIAssistant() {
     setInputValue("");
     setIsTyping(true);
 
-    // Simulate AI response
     setTimeout(() => {
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
@@ -77,60 +77,57 @@ export function AIAssistant() {
   };
 
   return (
-    <div className="w-80 bg-card border-l border-border flex flex-col h-full">
+    <div className="w-64 bg-card border-l border-border flex flex-col h-full">
       {/* Header */}
-      <div className="p-3 border-b border-border">
-        <div className="flex items-center justify-between mb-2">
-          <div className="flex items-center gap-2">
-            <div className="w-6 h-6 bg-gradient-primary rounded-full flex items-center justify-center">
-              <Sparkles className="w-3 h-3 text-white" />
-            </div>
-            <span className="font-medium text-foreground">AI Assistant</span>
-          </div>
+      <div className="p-2 border-b border-border">
+        <div className="flex items-center justify-between mb-1">
           <div className="flex items-center gap-1">
-            <Badge variant="secondary" className="text-xs px-2 py-0.5">
+            <Sparkles className="w-3 h-3 text-primary" />
+            <span className="text-xs font-medium text-foreground">AI Assistant</span>
+          </div>
+          <div className="flex items-center gap-0.5">
+            <Badge variant="secondary" className="text-[10px] px-1 py-0">
               Enterprise AI • Always learning
             </Badge>
-            <Button variant="ghost" size="sm" className="h-5 w-5 p-0">
-              <Minimize2 className="w-3 h-3" />
+            <Button variant="ghost" size="sm" className="h-4 w-4 p-0">
+              <ChevronDown className="w-2.5 h-2.5" />
             </Button>
           </div>
         </div>
         
-        <div className="flex items-center gap-2 text-xs text-muted-foreground">
-          <div className="w-2 h-2 bg-success rounded-full"></div>
+        <div className="flex items-center gap-1 text-[10px] text-muted-foreground">
+          <div className="w-1.5 h-1.5 bg-success rounded-full"></div>
           <span>AI Online</span>
           <span>•</span>
-          <Clock className="w-3 h-3" />
           <span>2 min ago</span>
         </div>
       </div>
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto p-3 space-y-4">
+      <div className="flex-1 overflow-y-auto p-2 space-y-2">
         {messages.map((message) => (
           <div
             key={message.id}
             className={cn(
-              "flex gap-3",
+              "flex gap-2",
               message.sender === 'user' ? "justify-end" : "justify-start"
             )}
           >
             {message.sender === 'assistant' && (
-              <div className="w-6 h-6 bg-gradient-primary rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                <Bot className="w-3 h-3 text-white" />
+              <div className="w-4 h-4 bg-primary rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                <Bot className="w-2.5 h-2.5 text-primary-foreground" />
               </div>
             )}
             
             <div className={cn(
-              "max-w-[80%] rounded-lg px-3 py-2 text-sm",
+              "max-w-[75%] rounded-md px-2 py-1 text-xs",
               message.sender === 'user' 
-                ? "bg-primary text-primary-foreground ml-8" 
-                : "bg-accent/50 text-foreground"
+                ? "bg-primary text-primary-foreground ml-6" 
+                : "bg-muted text-foreground"
             )}>
               <p className="leading-relaxed">{message.content}</p>
               <p className={cn(
-                "text-xs mt-1 opacity-70",
+                "text-[10px] mt-0.5 opacity-70",
                 message.sender === 'user' ? "text-primary-foreground" : "text-muted-foreground"
               )}>
                 {formatTime(message.timestamp)}
@@ -138,26 +135,26 @@ export function AIAssistant() {
             </div>
 
             {message.sender === 'user' && (
-              <div className="w-6 h-6 bg-accent rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                <User className="w-3 h-3 text-accent-foreground" />
+              <div className="w-4 h-4 bg-muted rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                <User className="w-2.5 h-2.5 text-foreground" />
               </div>
             )}
           </div>
         ))}
         
         {isTyping && (
-          <div className="flex gap-3">
-            <div className="w-6 h-6 bg-gradient-primary rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-              <Bot className="w-3 h-3 text-white" />
+          <div className="flex gap-2">
+            <div className="w-4 h-4 bg-primary rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+              <Bot className="w-2.5 h-2.5 text-primary-foreground" />
             </div>
-            <div className="bg-accent/50 text-foreground rounded-lg px-3 py-2 text-sm">
+            <div className="bg-muted text-foreground rounded-md px-2 py-1 text-xs">
               <div className="flex items-center gap-1">
-                <div className="flex gap-1">
-                  <div className="w-2 h-2 bg-current rounded-full animate-bounce [animation-delay:-0.3s]"></div>
-                  <div className="w-2 h-2 bg-current rounded-full animate-bounce [animation-delay:-0.15s]"></div>
-                  <div className="w-2 h-2 bg-current rounded-full animate-bounce"></div>
+                <div className="flex gap-0.5">
+                  <div className="w-1 h-1 bg-current rounded-full animate-bounce [animation-delay:-0.3s]"></div>
+                  <div className="w-1 h-1 bg-current rounded-full animate-bounce [animation-delay:-0.15s]"></div>
+                  <div className="w-1 h-1 bg-current rounded-full animate-bounce"></div>
                 </div>
-                <span className="text-muted-foreground ml-2">AI is typing...</span>
+                <span className="text-muted-foreground ml-1">AI is typing...</span>
               </div>
             </div>
           </div>
@@ -165,26 +162,26 @@ export function AIAssistant() {
       </div>
 
       {/* Input */}
-      <div className="p-3 border-t border-border">
-        <div className="flex gap-2">
+      <div className="p-2 border-t border-border">
+        <div className="flex gap-1 mb-1">
           <Input
             placeholder="Describe what you want to build, modify, or optimize..."
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             onKeyPress={handleKeyPress}
-            className="text-sm"
+            className="text-xs h-6"
           />
           <Button 
             onClick={sendMessage}
             disabled={!inputValue.trim() || isTyping}
             size="sm"
-            className="px-3"
+            className="px-2 h-6"
           >
-            <Send className="w-3 h-3" />
+            <Send className="w-2.5 h-2.5" />
           </Button>
         </div>
         
-        <p className="text-xs text-muted-foreground mt-2">
+        <p className="text-[10px] text-muted-foreground">
           Press Enter to send, Shift+Enter for new line
         </p>
       </div>

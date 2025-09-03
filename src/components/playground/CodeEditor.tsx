@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { X, Circle } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -55,6 +54,41 @@ export default App;`
   }
 };
 
+// Syntax highlighting helper
+const highlightSyntax = (code: string, language: string) => {
+  const lines = code.split('\n');
+  return lines.map((line, index) => {
+    let highlightedLine = line;
+    
+    if (language === 'json') {
+      highlightedLine = line
+        .replace(/"([^"]+)":/g, '<span class="token property">"$1":</span>')
+        .replace(/: "([^"]+)"/g, ': <span class="token string">"$1"</span>')
+        .replace(/: (\d+\.?\d*)/g, ': <span class="token number">$1</span>')
+        .replace(/: (true|false)/g, ': <span class="token boolean">$1</span>');
+    } else if (language === 'typescript') {
+      highlightedLine = line
+        .replace(/\b(import|export|function|const|let|var|return|if|else|for|while|class|interface|type)\b/g, '<span class="token keyword">$1</span>')
+        .replace(/'([^']*)'/g, '<span class="token string">\'$1\'</span>')
+        .replace(/"([^"]*)"/g, '<span class="token string">"$1"</span>')
+        .replace(/\/\/(.*)$/g, '<span class="token comment">//$1</span>')
+        .replace(/\b(\d+\.?\d*)\b/g, '<span class="token number">$1</span>');
+    }
+    
+    return (
+      <div key={index} className="flex">
+        <div className="w-8 text-right pr-2 text-muted-foreground select-none text-xs leading-4">
+          {index + 1}
+        </div>
+        <div 
+          className="flex-1 leading-4 text-xs"
+          dangerouslySetInnerHTML={{ __html: highlightedLine || '&nbsp;' }}
+        />
+      </div>
+    );
+  });
+};
+
 interface CodeEditorProps {
   selectedFile?: string;
   onFileChange?: (path: string, content: string) => void;
@@ -83,7 +117,6 @@ export function CodeEditor({ selectedFile, onFileChange }: CodeEditorProps) {
     setActiveTab(path);
   };
 
-  // When selectedFile changes, open it in a tab
   React.useEffect(() => {
     if (selectedFile && mockFiles[selectedFile]) {
       openTab(selectedFile);
@@ -99,7 +132,7 @@ export function CodeEditor({ selectedFile, onFileChange }: CodeEditorProps) {
       html: "text-orange-400"
     };
     
-    return <Circle className={cn("w-2 h-2 mr-2", colors[language as keyof typeof colors] || "text-muted-foreground")} />;
+    return <Circle className={cn("w-2 h-2 mr-1", colors[language as keyof typeof colors] || "text-muted-foreground")} fill="currentColor" />;
   };
 
   if (openTabs.length === 0) {
@@ -116,7 +149,7 @@ export function CodeEditor({ selectedFile, onFileChange }: CodeEditorProps) {
   return (
     <div className="flex-1 flex flex-col bg-background">
       {/* Tab Bar */}
-      <div className="flex items-center bg-card border-b border-border min-h-[32px]">
+      <div className="flex items-center bg-card border-b border-border min-h-[28px]">
         {openTabs.map((tabPath) => {
           const file = mockFiles[tabPath];
           if (!file) return null;
@@ -127,25 +160,25 @@ export function CodeEditor({ selectedFile, onFileChange }: CodeEditorProps) {
             <div
               key={tabPath}
               className={cn(
-                "flex items-center px-3 py-1 border-r border-border cursor-pointer group text-sm min-w-0",
+                "flex items-center px-2 py-1 border-r border-border cursor-pointer group text-xs min-w-0",
                 isActive 
-                  ? "bg-background text-foreground" 
-                  : "text-muted-foreground hover:text-foreground hover:bg-accent/50"
+                  ? "bg-background text-foreground border-t-2 border-t-primary" 
+                  : "text-muted-foreground hover:text-foreground hover:bg-muted/20"
               )}
               onClick={() => setActiveTab(tabPath)}
             >
               {getFileIcon(file.language)}
-              <span className="truncate mr-2">{file.name}</span>
+              <span className="truncate mr-1">{file.name}</span>
               {file.isDirty && (
-                <Circle className="w-2 h-2 mr-1 text-accent fill-current" />
+                <Circle className="w-1.5 h-1.5 mr-1 text-foreground fill-current" />
               )}
               <Button
                 variant="ghost"
                 size="sm"
-                className="h-4 w-4 p-0 opacity-0 group-hover:opacity-100 hover:bg-destructive/20 hover:text-destructive"
+                className="h-3 w-3 p-0 opacity-0 group-hover:opacity-100 hover:bg-destructive/20 hover:text-destructive"
                 onClick={(e) => closeTab(tabPath, e)}
               >
-                <X className="w-3 h-3" />
+                <X className="w-2.5 h-2.5" />
               </Button>
             </div>
           );
@@ -153,30 +186,24 @@ export function CodeEditor({ selectedFile, onFileChange }: CodeEditorProps) {
       </div>
 
       {/* Editor Content */}
-      <div className="flex-1 overflow-hidden">
+      <div className="flex-1 overflow-auto bg-background">
         {currentFile && (
-          <div className="h-full">
-            <div className="h-full bg-background">
-              <textarea
-                value={currentFile.content}
-                onChange={(e) => onFileChange?.(currentFile.path, e.target.value)}
-                className="w-full h-full p-4 bg-background text-foreground font-mono text-sm border-none outline-none resize-none"
-                style={{ tabSize: 2 }}
-                spellCheck={false}
-              />
+          <div className="h-full font-mono">
+            <div className="p-2">
+              {highlightSyntax(currentFile.content, currentFile.language)}
             </div>
           </div>
         )}
       </div>
 
       {/* Status Bar */}
-      <div className="h-6 bg-accent/30 border-t border-border flex items-center justify-between px-3 text-xs text-muted-foreground">
-        <div className="flex items-center gap-4">
+      <div className="h-5 bg-card border-t border-border flex items-center justify-between px-2 text-xs text-muted-foreground">
+        <div className="flex items-center gap-3">
           <span>TypeScript • React</span>
           <span>UTF-8</span>
           <span>LF</span>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
           <span>Ln 1, Col 1</span>
           <span>Spaces: 2</span>
         </div>

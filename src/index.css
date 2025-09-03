@@ -6,44 +6,44 @@
 
 @layer base {
   :root {
-    /* Core Colors - Modern Tech Palette */
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
+    /* VS Code Dark Theme Colors */
+    --background: 218 15% 8%;  /* #1e1e1e */
+    --foreground: 0 0% 86%;    /* #d4d4d4 */
 
-    --card: 240 10% 3.9%;
-    --card-foreground: 0 0% 98%;
+    --card: 218 18% 11%;       /* #252526 */
+    --card-foreground: 0 0% 86%;
 
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 218 18% 11%;
+    --popover-foreground: 0 0% 86%;
 
-    /* Primary - Electric Blue/Purple */
-    --primary: 252 91% 65%;
-    --primary-foreground: 240 10% 3.9%;
-    --primary-glow: 252 91% 75%;
+    /* Primary - VS Code Blue */
+    --primary: 211 100% 58%;   /* #007acc */
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 211 100% 68%;
 
-    /* Secondary - Darker Backgrounds */
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
+    /* Secondary - VS Code Panel */
+    --secondary: 218 18% 11%;  /* #252526 */
+    --secondary-foreground: 0 0% 86%;
 
-    /* Muted - Subtle Grays */
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
+    /* Muted - VS Code Subtle */
+    --muted: 218 15% 13%;      /* #2d2d30 */
+    --muted-foreground: 0 0% 62%; /* #9e9e9e */
 
-    /* Accent - Bright Highlights */
-    --accent: 142 76% 36%;
-    --accent-foreground: 355.7 100% 97.3%;
+    /* Accent - VS Code Selection */
+    --accent: 218 15% 13%;     /* #2d2d30 */
+    --accent-foreground: 0 0% 86%;
 
     /* Success/Error States */
-    --success: 142 76% 36%;
-    --success-foreground: 355.7 100% 97.3%;
+    --success: 120 100% 50%;   /* #00ff00 */
+    --success-foreground: 0 0% 0%;
     
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive: 0 100% 50%; /* #ff0000 */
+    --destructive-foreground: 0 0% 100%;
 
     /* Interactive Elements */
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 252 91% 65%;
+    --border: 218 15% 17%;     /* #3c3c3c */
+    --input: 218 15% 13%;      /* #2d2d30 */
+    --ring: 211 100% 58%;
 
     /* Gradients */
     --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
@@ -122,6 +122,18 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-mono;
   }
 }
+
+/* Syntax highlighting colors */
+.token.keyword { color: #569cd6; }
+.token.string { color: #ce9178; }
+.token.comment { color: #6a9955; }
+.token.punctuation { color: #d4d4d4; }
+.token.property { color: #9cdcfe; }
+.token.number { color: #b5cea8; }
+.token.boolean { color: #569cd6; }
+.token.tag { color: #569cd6; }
+.token.attr-name { color: #92c5f8; }
+.token.attr-value { color: #ce9178; }
