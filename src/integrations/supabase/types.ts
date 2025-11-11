@@ -14,13 +14,130 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      ai_conversations: {
+        Row: {
+          context: Json | null
+          created_at: string
+          id: string
+          messages: Json
+          project_id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          context?: Json | null
+          created_at?: string
+          id?: string
+          messages?: Json
+          project_id: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          context?: Json | null
+          created_at?: string
+          id?: string
+          messages?: Json
+          project_id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_conversations_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      project_files: {
+        Row: {
+          content: string | null
+          created_at: string
+          file_size: number | null
+          id: string
+          is_binary: boolean | null
+          language: string | null
+          path: string
+          project_id: string
+          updated_at: string
+        }
+        Insert: {
+          content?: string | null
+          created_at?: string
+          file_size?: number | null
+          id?: string
+          is_binary?: boolean | null
+          language?: string | null
+          path: string
+          project_id: string
+          updated_at?: string
+        }
+        Update: {
+          content?: string | null
+          created_at?: string
+          file_size?: number | null
+          id?: string
+          is_binary?: boolean | null
+          language?: string | null
+          path?: string
+          project_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_files_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      projects: {
+        Row: {
+          created_at: string
+          description: string | null
+          framework: string | null
+          id: string
+          name: string
+          settings: Json | null
+          template: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          framework?: string | null
+          id?: string
+          name: string
+          settings?: Json | null
+          template?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          framework?: string | null
+          id?: string
+          name?: string
+          settings?: Json | null
+          template?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      user_owns_project: { Args: { project_id: string }; Returns: boolean }
     }
     Enums: {
       [_ in never]: never
